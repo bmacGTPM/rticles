@@ -1,0 +1,191 @@
+---
+## For De Gruyter articles 
+##  - front matter must be commented out
+##  - knit as pdf_document2
+## For Arxiv submissions
+##  - uncomment these lines 
+##  - knit as pdf_document instead of pdf_document2
+
+# title: "JQAS Skeleton"
+# author: Us
+# date: '`r format(Sys.time())`'
+# abstract: 'This is a template for writing articles for DeGruyter journals.'
+# keywords: 'JQAS, Degruyter, RMarkdown' ## these don't show in Arxiv version for some reason
+output:
+  bookdown::pdf_document2:
+    includes:
+      before_body: 
+      in_header: preambleDeGruyter.tex
+    keep_tex: yes
+    latex_engine: pdflatex
+    number_sections: yes
+    toc: no
+  pdf_document:
+    includes: 
+      before_body: 
+      in_header: preambleArxiv.tex
+    keep_tex: yes
+    latex_engine: pdflatex
+    number_sections: yes
+    toc: yes
+    toc_depth: 3
+  bookdown::html_document2:
+    number_sections: no
+    theme: readable
+    toc: yes
+  bookdown::tufte_html2:
+    number_sections: no
+    toc: yes
+  bookdown::word_document2: null
+fontsize: 12pt
+linestretch: 1.5
+link-citations: yes
+bibliography: bibliography.bib
+linkcolor: blue
+urlcolor: blue
+citecolor: blue
+toccolor: blue
+---
+
+```{r knitr_options, echo=FALSE}
+library(knitr)
+library(tidyverse)
+library(viridis)
+library(scales)
+opts_chunk$set(fig.align='center', warning = FALSE, message = F, echo = FALSE, include=T)
+
+# define default formatting that can be used in all figures.
+## use bw theme, make some modifications, then set as default theme
+att.theme = theme_bw() + theme(text=element_text(size=11))  
+theme_set(att.theme)
+
+```
+
+```{r}
+## This chunk is optional and can be removed, but you may want to keep it since it helps make your figures more colorblind-friendly.
+##
+##
+## Here we defines a colorblind friendly color palette for categorical variables
+## from https://jacksonlab.agronomy.wisc.edu/2016/05/23/15-level-colorblind-friendly-palette/
+## and set the default continuous color palette to a 
+## colorblind friendly palette from the package viridis
+cb.pal =  c("#000000","#004949","#009292","#ff6db6","#ffb6db",
+            "#490092","#006ddb","#b66dff","#6db6ff","#b6dbff",
+            "#920000","#924900","#db6d00","#24ff24","#ffff6d")
+#pie(rep(1,15), col=cb.pal) ## displays the colors
+
+## replace the yellow with gray, since yellow is almost impossible to see on white paper.
+cb.pal[15] = 'lightgray'  
+
+## remove the dark green.  It's too close to black when only two colors are needed.
+cb.pal = cb.pal[-2] 
+n.cb = length(cb.pal) 
+#pie(rep(1,n.cb), col=cb.pal) ## displays the colors
+
+## in case there are more than n.cb categories, repeat the colors, and add different shapes
+cb.pal = rep(cb.pal, 5)
+
+## This gives n circles, triangles, squares, upside down triangles, and diamonds  
+shapes = c(rep(21, n.cb), rep(24, n.cb), rep(22, n.cb), rep(25, n.cb), rep(23,n.cb)) 
+
+## Use those to change the default color/fill/shape scales. Found this here:
+## https://stackoverflow.com/questions/26019984/hot-to-change-set-global-scale-aesthetics-colours-for-ggplot
+## Also, change the default continuous color palette to viridis.
+## Note: Comment these out to use default color scales.
+scale_colour_discrete   <- function(...) scale_color_manual(values=cb.pal) ## gotta use u in colour
+scale_fill_discrete     <- function(...) scale_fill_manual( values=cb.pal)
+scale_shape_discrete    <- function(...) scale_shape_manual(values=shapes)
+scale_colour_continuous <- function(...) scale_color_viridis()
+```
+
+# This should be the first section of your document
+
+** **Note: Please see the YAML header of this file for information about front matter and for an easy way to reformat your article for submitting to Arxiv.  For further details, see `?degruyter_article`.** **
+
+Your text goes here. Start with the first section or paragraph of your
+article. Do not set use either headers or footers and do not set any running
+heads or change any page numbers.
+
+The title page along with headers and footers will be inserted by the EdiKit
+system. Use the ``revise manuscript'' link to enter this information in the
+EdiKit system.
+
+Use the standard LaTeX commands to set the text of the article. The dgjournal
+package works with any of the standard LaTeX document classes - article, report
+or book. Other document classes should work but compliance with De Gruyter
+requirements is not assured. For more information on LaTeX, see [@lamport; @mittelbach; @oetiker]. [@mittelbach] is highly recommended. 
+
+Use the standard LaTeX sectioning commands for your headings.
+
+## A second order heading
+
+Some text under the subheading. Paragraphs that follow heads are not
+indented.
+
+Math should also be set in Times. Use the mathptmx package if you do not have
+any of the commercially available fonts that are compatible with Times.
+
+\begin{equation}
+    y^{(n)} = \sum_{i=0}^{n-1} a_i(x) y^{(i)} + r(x) 
+\end{equation}
+
+All environments provided by the standard LaTeX document classes are
+unchanged. Vertical spaces within lists have been altered to comply with De Gruyter
+requirements.
+
+\begin{enumerate}
+\item This is the first item within the list. Some more text here in order to
+  display the alignment.
+\item Another item in the list.
+\item Yet another item in the list.
+\end{enumerate}
+
+
+Here is an example of a Figure. It's the same as in standard LaTeX.
+
+\begin{figure}[!h]
+%% Use the graphics package to insert figures
+%% \includegraphics{figure.eps}
+% Use \centering to center the table
+\centering
+%% A small box in place of a figure
+\framebox{%
+  \begin{minipage}{10pc}
+    \begin{center}
+      \vspace{1cm}\par
+      A figure\par
+      \vspace{1cm}
+    \end{center}
+  \end{minipage}}
+\caption{Insert your caption here. If you wish to label your figure for
+  cross-referencing, use a label either within the caption or after it.}
+\label{fig1}
+\end{figure}
+
+An example of a table follows. This is also the same as in standard LaTeX.
+
+\begin{table}[!h]
+% Use \centering to center the table
+\centering
+\caption{Insert your table caption here. If you wish to label the table for
+  cross-referencing, use a label either within the caption or after it.}
+\begin{tabular}{llll}
+\hline
+Symbol        & LaTeX Command      & Symbol      & LaTeX Command \\
+\hline
+$\alpha$      & \verb+\alpha+      & $\zeta$     & \verb+\zeta+ \\
+$\beta$       & \verb+\beta+       & $\eta$      & \verb+\eta+ \\
+$\gamma$      & \verb+\gamma+      & $\theta$    & \verb+\theta+ \\
+$\delta$      & \verb+\delta+      & $\vartheta$ & \verb+\vartheta+ \\
+$\epsilon$    & \verb+\epsilon+    & $\iota$     & \verb+\iota+ \\
+$\varepsilon$ & \verb+\varepsilon+ & $\kappa$    & \verb+\kappa+ \\
+\hline
+\end{tabular}
+\end{table}
+
+Use the \verb+thebibliography+ environment for the references.  BibTeX users may
+use the provided BibTeX style file DeGruyter.bst.
+
+# References
+\bibliographystyle{DeGruyter}
+\bibliography{bibliography}

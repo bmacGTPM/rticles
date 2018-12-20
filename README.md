@@ -32,6 +32,8 @@ The **rticles** package provides a suite of custom [R Markdown](http://rmarkdown
 
 - [CTeX](http://ctex.org) documents
 
+- [De Gruyter](https://www.degruyter.com/) journal submissions
+
 - [Elsevier](https://www.elsevier.com) journal submissions
 
 - [IEEE Transaction](http://www.ieee.org/publications_standards/publications/authors/author_templates.html) journal submissions
