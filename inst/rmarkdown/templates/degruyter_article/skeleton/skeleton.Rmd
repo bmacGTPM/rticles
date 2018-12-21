@@ -12,14 +12,6 @@ date: '`r format(Sys.time())`'
 abstract: 'This is a template for writing articles for DeGruyter journals.'
 keywords: 'JQAS, Degruyter, RMarkdown' 
 output:
-  bookdown::pdf_document2:
-    includes:
-      before_body: 
-      in_header: preambleDeGruyter.tex
-    keep_tex: yes
-    latex_engine: pdflatex
-    number_sections: yes
-    toc: no
   pdf_document:
     includes: 
       before_body: 
@@ -29,6 +21,14 @@ output:
     number_sections: yes
     toc: yes
     toc_depth: 3
+  bookdown::pdf_document2:
+    includes:
+      before_body: 
+      in_header: preambleDeGruyter.tex
+    keep_tex: yes
+    latex_engine: pdflatex
+    number_sections: yes
+    toc: no
   bookdown::html_document2:
     number_sections: no
     theme: readable
