@@ -6,11 +6,11 @@
 ##  - uncomment these lines 
 ##  - knit as pdf_document instead of pdf_document2
 
-# title: "JQAS Skeleton"
-# author: Us
-# date: '`r format(Sys.time())`'
-# abstract: 'This is a template for writing articles for DeGruyter journals.'
-# keywords: 'JQAS, Degruyter, RMarkdown' ## these don't show in Arxiv version for some reason
+title: "JQAS Skeleton"
+author: Us
+date: '`r format(Sys.time())`'
+abstract: 'This is a template for writing articles for DeGruyter journals.'
+keywords: 'JQAS, Degruyter, RMarkdown' 
 output:
   bookdown::pdf_document2:
     includes:
