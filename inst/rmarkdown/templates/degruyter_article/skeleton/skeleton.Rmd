@@ -1,10 +1,17 @@
 ---
 title: "De Gruyter Skeleton"
-author: Ben Baumer, Brian Macdonald
+authors: 
+- name: Brian Macdonald
+  thanks: The authors gratefully acknowledge ...
+  affiliation: Department of YYY, University of XXX
+- name: Benjamin S. Baumer
+  thanks: The authors gratefully acknowledge ...
+  affiliation: Department of YYY, University of XXX
 date: '`r format(Sys.time())`'
 abstract: 'This is a template for writing articles for De Gruyter journals such as Journal of Quantitative Analysis in Sports.'
 keywords: 'De Gruyter, R Markdown, JQAS'
 bibliography: bibliography.bib
+blinded: 1
 output: 
   rticles::degruyter_article:
     includes:

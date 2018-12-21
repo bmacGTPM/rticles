@@ -4,8 +4,8 @@
 %%%%%%%% from the DeGruyter template dg_template.tex %%%%%%%
 %% This is the recommended preamble for your document.
 
-%% Load De Gruyter specific settings 
-\usepackage{dgjournal}          
+%% Load De Gruyter specific settings
+\usepackage{dgjournal}
 
 %% The mathptmx package is recommended for Times compatible math symbols.
 %% Use mtpro2 or mathtime instead of mathptmx if you have the commercially
@@ -17,16 +17,18 @@
 \usepackage{graphics}
 
 %% Use natbib with these recommended options
-\usepackage[authoryear,comma,longnamesfirst,sectionbib]{natbib} 
+\usepackage[authoryear,comma,longnamesfirst,sectionbib]{natbib}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-%% A few more packages 
+%% A few more packages
 \usepackage{amsmath, amsthm, amsfonts, dsfont, amssymb}
 \usepackage{booktabs,array, multirow, caption, setspace, enumerate}
 \usepackage[colorlinks=true, linkcolor=blue, urlcolor=blue, citecolor=blue]{hyperref}
 \usepackage[dvips]{graphicx}
 
+% NOTE: To produce blinded version, replace "0" with "1" below.
+\newcommand{\blind}{$blinded$}
 
 %% load any required packages here
 $preamble$
@@ -40,6 +42,46 @@ $header-includes$
 $endfor$
 
 \begin{document}
+
+\def\spacingset#1{\renewcommand{\baselinestretch}%
+{#1}\small\normalsize} \spacingset{1}
+
+
+\if0\blind
+{
+  \title{\bf $title$}
+
+  \author{
+    $for(authors)$
+    $authors.name$ $if(authors.thanks)$\thanks{$authors.thanks$} $endif$\\
+    $authors.affiliation$\\
+    $sep$ and \\ $endfor$
+  }
+%  \maketitle
+} \fi
+
+\if1\blind
+{
+  \bigskip
+  \bigskip
+  \bigskip
+  \begin{center}
+    {\LARGE\bf $title$}
+  \end{center}
+  \medskip
+} \fi
+
+\bigskip
+\begin{abstract}
+$abstract$
+\end{abstract}
+
+\noindent%
+{\it Keywords:} $for(keywords)$$keywords$$sep$, $endfor$
+\vfill
+
+\newpage
+\spacingset{1.45} % DON'T change the spacing!
 
 $body$
 
