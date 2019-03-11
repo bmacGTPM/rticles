@@ -182,7 +182,6 @@ A bulleted list
 %- Item 2
 %    - Subitem 1
 
-
 ## Numbered lists
 
 A numbered list
