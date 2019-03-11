@@ -19,7 +19,7 @@ output:
         ## in_header: preamble.tex ## put extra packages and custom commands here
   pdf_document:
      includes:
-       before_body:
+       before_body: 
          #in_header: preamble.tex
      keep_tex: yes
      latex_engine: pdflatex
@@ -35,76 +35,161 @@ linkcolor: blue
 urlcolor: blue
 citecolor: blue
 toccolor: blue
+longtable: false
 ---
 
 ```{r knitr_options, echo=FALSE}
 library(knitr)
+opts_chunk$set(fig.align='center', warning = FALSE, message = F, echo = FALSE, include=T)
+
+## useful packages
+library(bookdown)
 library(tidyverse)
 library(viridis)
 library(scales)
-opts_chunk$set(fig.align='center', warning = FALSE, message = F, echo = FALSE, include=T)
-
-# define default formatting that can be used in all figures.
-## use bw theme, make some modifications, then set as default theme
-att.theme = theme_bw() + theme(text=element_text(size=11))  
-theme_set(att.theme)
-
+library(teamcolors) ## primary, secondary, and tertiary colors for NFL, NBA, MLB, NHL, MLS, EPL
 ```
+
 
 ```{r}
 ## This chunk is optional and can be removed, but you may want to keep it since it helps make your figures more colorblind-friendly.
-##
-##
-## Here we defines a colorblind friendly color palette for categorical variables
-## from https://jacksonlab.agronomy.wisc.edu/2016/05/23/15-level-colorblind-friendly-palette/
-## and set the default continuous color palette to a
-## colorblind friendly palette from the package viridis
-cb.pal =  c("#000000","#004949","#009292","#ff6db6","#ffb6db",
-            "#490092","#006ddb","#b66dff","#6db6ff","#b6dbff",
-            "#920000","#924900","#db6d00","#24ff24","#ffff6d")
-#pie(rep(1,15), col=cb.pal) ## displays the colors
 
-## replace the yellow with gray, since yellow is almost impossible to see on white paper.
-cb.pal[15] = 'lightgray'
-
-## remove the dark green.  It's too close to black when only two colors are needed.
-cb.pal = cb.pal[-2]
-n.cb = length(cb.pal)
-#pie(rep(1,n.cb), col=cb.pal) ## displays the colors
-
-## in case there are more than n.cb categories, repeat the colors, and add different shapes
-cb.pal = rep(cb.pal, 5)
-
-## This gives n circles, triangles, squares, upside down triangles, and diamonds
-shapes = c(rep(21, n.cb), rep(24, n.cb), rep(22, n.cb), rep(25, n.cb), rep(23,n.cb))
-
-## Use those to change the default color/fill/shape scales. Found this here:
-## https://stackoverflow.com/questions/26019984/hot-to-change-set-global-scale-aesthetics-colours-for-ggplot
-## Also, change the default continuous color palette to viridis.
-## Note: Comment these out to use default color scales.
-scale_colour_discrete   <- function(...) scale_color_manual(values=cb.pal) ## gotta use u in colour
-scale_fill_discrete     <- function(...) scale_fill_manual( values=cb.pal)
-scale_shape_discrete    <- function(...) scale_shape_manual(values=shapes)
-scale_colour_continuous <- function(...) scale_color_viridis()
+# ## define default formatting that can be used in all figures.
+# ## use bw theme, make some modifications, then set as default theme
+# att.theme = theme_bw() + theme(text=element_text(size=11))  
+# theme_set(att.theme)
+# 
+# ## use colorblind friendly color palette for categorical variables
+# ## from https://jacksonlab.agronomy.wisc.edu/2016/05/23/15-level-colorblind-friendly-palette/
+# cb.pal =  c("#000000","#004949","#009292","#ff6db6","#ffb6db",
+#             "#490092","#006ddb","#b66dff","#6db6ff","#b6dbff",
+#             "#920000","#924900","#db6d00","#24ff24","#ffff6d")
+# #pie(rep(1,15), col=cb.pal) ## displays the colors
+# cb.pal[15] = 'lightgray' ## replace the yellow with gray, since yellow is almost impossible to see. 
+# cb.pal = cb.pal[-2] ## remove this dark green.  Too close to black
+# n.cb = length(cb.pal) ## now 14.
+# #pie(rep(1,n.cb), col=cb.pal) ## displays the colors
+# 
+# ## in case there are more than n.cb categories, repeat the colors, and add different shapes
+# ## 14 circles, triangles, squares, upside down triangles, diamonds  
+# cb.pal = rep(cb.pal, 5)
+# shapes = c(rep(21, n.cb), rep(24, n.cb), rep(22, n.cb), rep(25, n.cb), rep(23,n.cb)) 
+# shapes 
+# 
+# ## use those to change the default color scales. Found this here:
+# ## https://stackoverflow.com/questions/26019984/hot-to-change-set-global-scale-aesthetics-colours-for-ggplot
+# scale_colour_discrete   <- function(...) scale_color_manual(values=cb.pal) ## gotta use u in colour
+# scale_fill_discrete     <- function(...) scale_fill_manual( values=cb.pal)
+# scale_shape_discrete    <- function(...) scale_shape_manual(values=shapes)
+# scale_colour_continuous <- function(...) scale_color_viridis()##
 ```
 
-# Introduction
+# Introduction 
 
-This should be the first section of your document. The title, author, abstract, etc., will be entered elsewhere.  Even if you list that information in the header above, the title page will not appear in this .pdf document.
+This should be the first section of your document. The title, author, abstract, etc., will be entered elsewhere.  Even if you list that information in the header above, the title page will **not** appear in this .pdf document, as it is ignored by the `.sty` file. 
 
-** **Note: Please see the YAML header of this file for information about front matter and for an easy way to reformat your article for submitting to Arxiv.  For further details, see `?degruyter_article`.** **
+Your text goes here. Start with the first section or paragraph of your article. Do not set use either headers or footers and do not set any running heads or change any page numbers.
 
-Your text goes here. Start with the first section or paragraph of your
-article. Do not set use either headers or footers and do not set any running
-heads or change any page numbers.
+The title page along with headers and footers will be inserted by the EdiKit system. Use the ``revise manuscript'' link to enter this information in the EdiKit system. 
 
-The title page along with headers and footers will be inserted by the EdiKit
-system. Use the ``revise manuscript'' link to enter this information in the
-EdiKit system. 
+# Section \label{sec}
+Section \ref{sec} is a numbered section with label 
 
-Citations: [@lamport; @mittelbach; @oetiker]. [@mittelbach] is highly recommended. 
+## Numbered Subsection \label{subsec}
+Section \ref{subsec} is a numbered subsection with label 
+
+## Unnumbered Subsection {-}
+An unnumbered subsection
+
+### Subsubsection 
+A numbered subsubsection
+
+\newpage
+
+## Equations
+Here is a labeled and numbered equation.  The code
+```
+\begin{equation} 
+  1+1=2
+  \label{eq:fancymath1}
+\end{equation} 
+```
+\noindent 
+gives this
+
+\begin{equation} 
+  1+1=2
+  \label{eq:fancymath1}
+\end{equation} 
+
+\noindent 
+and you can reference equations using `\eqref{eq:fancymath1}`, which gives \eqref{eq:fancymath1}.
+
+\noindent 
+I thought this was supposed to work, but it doesn't: 
+\begin{equation} 
+  1+1=2
+  (\#eq:fancymath2)
+\end{equation} 
+
+\noindent 
+Referencing: \@ref(eq:fancymath2) \ref{eq:fancymath2} 
+
+
+\newpage
+## Figures
+Figures can be inserted using `\includegraphics` as you would in LaTeX (not shown), or by using chunks, as in shown below, which gives the plot shown in Figure \ref{fig:fig1}.
+
+
+    ```{r fig1, fig.cap='A figure with a caption', fig.height=4, fig.width=5}`r ''`
+      ggplot(data = mtcars, mapping = aes(x = wt, y = mpg)) + geom_point() 
+    ```
+
+```{r fig1, fig.cap='A figure with a caption', fig.height=4, fig.width=5}
+ggplot(data = mtcars, mapping = aes(x = wt, y = mpg)) + geom_point() 
+```   
+
+\noindent 
+This is a numbered figure with a caption and specific height (optional) and width (optional). When `fig.cap` is specified, the image is put into a \LaTeX  figure environment, meaning the image will float, will be numbered, and can be cross-referenced using `Figure \ref{fig:fig1}` which gives Figure \ref{fig:fig1}.
+
+## Tables
+Here is a numbered table with a caption:
+
+```{r tab1, echo=TRUE, fig.cap='A table'}
+## the kable doesn't currently work
+# knitr::kable(
+#   head(mtcars), booktabs = TRUE, longtable=FALSE,
+#   caption = 'Some mtcars data'
+# )
+head(mtcars)
+```
+
+\noindent
+Referencing tables\@ref(tab:tab1) \ref{tab:tab1}  
+
+
+## Citations 
+Example Citations: [@lamport; @mittelbach; @oetiker]. [@mittelbach] is highly recommended. 
 
 Use the \verb+thebibliography+ environment for the references.  BibTeX users may
-use the provided BibTeX style file DeGruyter.bst.
+use the provided BibTeX style file DeGruyter.bst.  Note the line `bibliography: bibliography.bib` is included in the header.
 
+
+## Bulleted lists
+A bulleted list
+
+%- Item 1
+%- Item 2
+%    - Subitem 1
+
+
+## Numbered lists
+
+A numbered list
+
+%1. Item 1
+%2. Item 2
+%    a. Subitem 2a
+
+  
 # References
