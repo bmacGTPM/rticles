@@ -178,17 +178,17 @@ use the provided BibTeX style file DeGruyter.bst.  Note the line `bibliography: 
 ## Bulleted lists
 A bulleted list
 
-%- Item 1
-%- Item 2
-%    - Subitem 1
+- Item 1
+- Item 2
+    - Subitem 1
 
 ## Numbered lists
 
 A numbered list
 
-%1. Item 1
-%2. Item 2
-%    a. Subitem 2a
+1. Item 1
+2. Item 2
+    a. Subitem 2a
 
   
 # References
